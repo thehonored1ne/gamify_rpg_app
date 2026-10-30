@@ -9,6 +9,11 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Phase 0 foundation: Room 2.8.5 (runtime, ktx, compiler via KSP), DataStore 1.3.0, WorkManager 2.12.0, kotlinx-serialization-json 1.12.0, `desugar_jdk_libs` 2.1.5.
+- Test dependencies: Robolectric 4.17, Turbine 1.2.1, `room-testing`, `work-testing`.
+- Room schema export configured to `app/schemas`; KSP and Room Gradle plugins applied.
+- Core library desugaring enabled so `java.time` works on minSdk 24.
+- `AppRoot` placeholder screen so the app still launches after the demo removal.
 - Product requirements for the Life RPG app in `specs/`:
   - `001-architecture`, `002-navigation`, `003-quest-system`, `004-progression-economy`
   - `005-penalty-policy`, `006-system-quests`, `007-achievements-streaks`, `008-shop-cosmetics`
@@ -20,6 +25,10 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Package renamed `com.example.myfastapp` → `com.example.liferpg` (namespace, applicationId, source tree, theme, resources).
+- App label is now "Life RPG System"; root Gradle project renamed to `LifeRPG`.
+- Compose theme renamed `MyFastAppTheme` → `LifeRpgTheme`.
+- `android:allowBackup` set to `false`.
 - Penalty policy restricted to in-app effects only: gold, XP, streak, failed mark. Body, health, money, and social consequences are explicitly denied.
 - Currency defined as a single in-app currency (gold) earned in-app only; no real-money purchases.
 - Gold may also be awarded by achievement unlocks (`004` R6).
@@ -30,6 +39,10 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Removed
 
+- Demo UI and data: `MainScreen`, `MainScreenViewModel`, `MainScreenUiState`, `DataRepository`, `DefaultDataRepository`, `MainNavigation`, `NavigationKeys`, `MainScreenViewModelTest`, `MainScreenTest`.
+- Coil dependencies (`io.coil-kt:coil`, `io.coil-kt:coil-compose`) and their catalog entries.
+- `INTERNET` permission from `AndroidManifest.xml`.
+- `res/xml/backup_rules.xml` and `res/xml/data_extraction_rules.xml` (backup disabled).
 - `specs/013-theming.md`, replaced by `specs/013-ui-design-system.md`.
 
 ## [1.0.0] - 2026-10-30

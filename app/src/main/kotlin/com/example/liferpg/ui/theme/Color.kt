@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.myfastapp.ui.theme
+package com.example.liferpg.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

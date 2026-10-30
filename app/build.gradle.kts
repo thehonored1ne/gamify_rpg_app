@@ -2,13 +2,15 @@ plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.compose.compiler)
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.ksp)
+  alias(libs.plugins.room)
 }
 
 android {
-  namespace = "com.example.myfastapp"
+  namespace = "com.example.liferpg"
   compileSdk = 36
   defaultConfig {
-    applicationId = "com.example.myfastapp"
+    applicationId = "com.example.liferpg"
     minSdk = 24
     targetSdk = 36
     versionCode = 1
@@ -24,6 +26,7 @@ android {
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    isCoreLibraryDesugaringEnabled = true
   }
 
   buildFeatures {
@@ -42,6 +45,10 @@ android {
 
 kotlin {
   jvmToolchain(17)
+}
+
+room {
+  schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
@@ -72,13 +79,30 @@ dependencies {
   implementation(libs.androidx.navigation3.runtime)
   implementation(libs.androidx.lifecycle.viewmodel.navigation3)
 
-  // Coil - image loading
-  implementation(libs.coil.core)
-  implementation(libs.coil.compose)
+  // Room
+  implementation(libs.androidx.room.runtime)
+  implementation(libs.androidx.room.ktx)
+  ksp(libs.androidx.room.compiler)
+
+  // DataStore
+  implementation(libs.androidx.datastore.preferences)
+
+  // WorkManager
+  implementation(libs.androidx.work.runtime.ktx)
+
+  // Serialization
+  implementation(libs.kotlinx.serialization.json)
+
+  // Desugaring: java.time on minSdk 24
+  coreLibraryDesugaring(libs.desugar.jdk.libs)
 
   // Local tests: jUnit, coroutines, Android runner
   testImplementation(libs.junit)
   testImplementation(libs.kotlinx.coroutines.test)
+  testImplementation(libs.robolectric)
+  testImplementation(libs.androidx.room.testing)
+  testImplementation(libs.androidx.work.testing)
+  testImplementation(libs.turbine)
 
   // Instrumented tests: jUnit rules and runners
   androidTestImplementation(libs.androidx.test.core)

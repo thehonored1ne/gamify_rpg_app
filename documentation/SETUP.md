@@ -36,12 +36,12 @@ APK output: `app/build/outputs/apk/debug/app-debug.apk`
 ```powershell
 adb devices                                   # confirm the device is attached
 adb install -r app\build\outputs\apk\debug\app-debug.apk
-adb shell am start -n com.example.myfastapp/.MainActivity
-adb shell am force-stop com.example.myfastapp
+adb shell am start -n com.example.liferpg/.MainActivity
+adb shell am force-stop com.example.liferpg
 adb logcat                                    # crash and runtime logs
 adb shell screencap -p /sdcard/shot.png       # screenshot
 adb pull /sdcard/shot.png .
-adb shell run-as com.example.myfastapp ls -R cache   # inspect app-private cache
+adb shell run-as com.example.liferpg ls -R cache   # inspect app-private cache
 ```
 
 Device serial used during development: `15187705C5010595`.
@@ -54,16 +54,12 @@ The shell is PowerShell:
 - use separate lines or `;`, `Select-String` instead of `grep`, `Remove-Item -Recurse -Force` instead of `rm -rf`
 - prefer `python -c "..."` for multi-line file edits
 
-## Planned changes (not applied yet)
+## Applied in Phase 0
 
-Per `specs/001`–`016`, the rewrite will:
-
-- rename the package to `com.example.liferpg`
-- add Room (with KSP) and DataStore
-- drop Coil and the `INTERNET` permission
-- add `app/schemas` for exported Room schemas
-
-Until then, the commands above target the demo app.
+- package renamed to `com.example.liferpg`
+- Room (with KSP), DataStore, WorkManager, kotlinx-serialization, and desugaring added
+- Coil and the `INTERNET` permission removed; `allowBackup="false"`
+- `app/schemas` configured as the Room schema directory (first schema appears once a `@Database` class exists)
 
 ## Troubleshooting
 
@@ -72,11 +68,10 @@ Until then, the commands above target the demo app.
 | `Failed to find target with hash string 'android-37'` | AGP 9.0.1 has no `android-37` target; keep `compileSdk = 36` |
 | `Unresolved reference 'android'` / `'namespace'` in `app/build.gradle.kts` | plugins declared with `apply false` in the app module; remove `apply false` there |
 | `Unresolved reference 'material3'` on `libs.androidx` | alias is `androidx-compose-material3`, accessor is `libs.androidx.compose.material3` |
-| `alias 'coil' is not a valid alias` | catalog aliases cannot be prefixes of each other; use `coil-core` + `coil-compose` |
-| `module 'io.coil-kt.coil' is not a valid module notation` | use `group` + `name`, or `io.coil-kt:coil` with a colon |
+| `alias 'coil-core' is not a valid alias` | catalog aliases cannot be prefixes of each other (kept for reference; Coil is no longer a dependency) |
+| `module 'io.coil-kt.coil' is not a valid module notation` | use `group` + `name`, or `io.coil-kt:coil` with a colon (kept for reference; Coil is no longer a dependency) |
 | Configuration cache holds stale state | `.\gradlew --stop`, then delete `.gradle\configuration-cache` |
-| Images never appear in the Coil demo | device has no data connection, or `INTERNET` permission missing from the manifest |
-| `BUILD SUCCESSFUL` but old UI on device | `installDebug` was not run, or another app instance is in front |
+| Old UI still on device after install | `installDebug` was not run, or another app instance is in front |
 
 ## Related docs
 

@@ -8,7 +8,7 @@ Source of truth for requirements: `specs/001`–`016`
 
 | Phase | Scope | Status | Gate |
 |---|---|---|---|
-| 0 | Setup: package rename, strip demo, add Room/DataStore/WorkManager | not started | build + tests green, no `INTERNET` permission |
+| 0 | Setup: package rename, strip demo, add Room/DataStore/WorkManager | done | build + tests green, no `INTERNET` permission |
 | 1 | Domain core: XP, level, ledger, penalties, streaks, offers | not started | unit tests cover `004`–`007` acceptance criteria |
 | 2 | Persistence + quest CRUD screens | not started | quest survives process death |
 | 3 | Core loop: complete, undo, fail, dashboard | not started | full loop works offline, rewards/penalties applied once |
@@ -17,7 +17,7 @@ Source of truth for requirements: `specs/001`–`016`
 | 6 | System quests + 30-quest content library | not started | determinism and 7-day exclusion pass |
 | 7 | Polish: animation, accessibility, performance | not started | `013` accessibility checklist passes |
 
-- [ ] Phase 0 — Setup
+- [x] Phase 0 — Setup
 - [ ] Phase 1 — Domain core
 - [ ] Phase 2 — Persistence and quest CRUD
 - [ ] Phase 3 — Core loop
@@ -41,18 +41,19 @@ Source of truth for requirements: `specs/001`–`016`
 
 ## Phase 0 — Setup
 
-- [ ] Git init and baseline commit (owner: user)
-- [ ] Rename package to `com.example.liferpg` (namespace, applicationId, source dirs, imports)
-- [ ] Delete demo: `MainScreen`, `MainScreenViewModel`, `MainScreenUiState`, `DataRepository`, `DefaultDataRepository`, their tests
-- [ ] Remove Coil dependencies and the `INTERNET` permission
-- [ ] Add Room (runtime, ktx, compiler via KSP), DataStore, WorkManager, desugaring
-- [ ] Enable KSP plugin and Room schema export to `app/schemas`
-- [ ] Keep Navigation3, theme, version catalog, Gradle setup
+- [ done ] Git init and baseline commit (owner: user)
+- [x] Rename package to `com.example.liferpg` (namespace, applicationId, source dirs, imports)
+- [x] Delete demo: `MainScreen`, `MainScreenViewModel`, `MainScreenUiState`, `DataRepository`, `DefaultDataRepository`, their tests
+- [x] Remove Coil dependencies and the `INTERNET` permission
+- [x] Add Room (runtime, ktx, compiler via KSP), DataStore, WorkManager, desugaring
+- [x] Enable KSP plugin and Room schema export to `app/schemas`
+- [x] Keep Navigation3, theme, version catalog, Gradle setup
 
 Gate:
-- `.\gradlew assembleDebug` and `.\gradlew test` pass
-- manifest declares no `INTERNET` permission
-- `app/schemas` is produced by the build
+- `.\gradlew assembleDebug` and `.\gradlew test` pass — verified 2026-10-30
+- manifest declares no `INTERNET` permission — verified with `aapt2 dump permissions`
+- `app/schemas` is configured; the first schema file appears when the first `@Database` is added in Phase 2
+- app installs and launches on device `15187705C5010595` — verified
 
 ## Phase 1 — Domain core
 
