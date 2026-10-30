@@ -1,3 +1,98 @@
 <resources>
     <string name="app_name">Life RPG System</string>
+
+    <!-- Common actions -->
+    <string name="action_add">Add</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_complete">Complete</string>
+    <string name="action_start">Start</string>
+    <string name="action_back">Back</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_create_quest">Create quest</string>
+    <string name="cd_add_quest">Create a new quest</string>
+    <string name="cd_back">Go back</string>
+
+    <!-- Errors and states -->
+    <string name="error_generic">Something went wrong. Try again.</string>
+    <string name="error_quest_not_found">This quest no longer exists.</string>
+
+    <!-- Quest list -->
+    <string name="quests_title">Quests</string>
+    <string name="quests_empty_title">No quests yet</string>
+    <string name="quests_empty_body">Create your first quest to start earning XP.</string>
+    <string name="quests_loading">Loading quests</string>
+
+    <!-- Progression -->
+    <string name="level_label">Level %1$d</string>
+    <string name="gold_label">%1$d gold</string>
+    <string name="xp_progress_label">%1$d / %2$d XP</string>
+    <string name="xp_progress_max">Max level</string>
+
+    <!-- Quest fields -->
+    <string name="quest_title_label">Title</string>
+    <string name="quest_description_label">Description (optional)</string>
+    <string name="quest_difficulty_label">Difficulty</string>
+    <string name="quest_category_label">Category</string>
+    <string name="quest_rewards_label">Rewards</string>
+    <string name="quest_xp_label">XP</string>
+    <string name="quest_gold_label">Gold</string>
+    <string name="quest_reward_hint">Allowed: %1$d–%2$d XP, 0–%3$d gold</string>
+    <string name="quest_deadline_label">Deadline</string>
+    <string name="quest_deadline_none">None</string>
+    <string name="quest_deadline_date">Date</string>
+    <string name="quest_deadline_timer">Timer</string>
+    <string name="quest_due_date_label">Due date</string>
+    <string name="quest_due_date_unset">Pick a date</string>
+    <string name="quest_duration_label">Duration in minutes</string>
+    <string name="quest_penalty_label">Penalty (optional)</string>
+    <string name="quest_penalty_amount_label">Penalty amount</string>
+    <string name="quest_penalty_none">No penalty</string>
+    <string name="quest_penalty_gold">Lose gold</string>
+    <string name="quest_penalty_xp">Lose XP</string>
+    <string name="quest_penalty_mark">Mark as failed</string>
+    <string name="quest_penalty_streak">Reset streak</string>
+
+    <!-- Subtasks -->
+    <string name="quest_subtasks_label">Subtasks</string>
+    <string name="quest_subtask_label">Subtask %1$d</string>
+    <string name="action_add_subtask">Add subtask</string>
+    <string name="cd_remove_subtask">Remove subtask</string>
+
+    <!-- Quest detail -->
+    <string name="quest_detail_title">Quest</string>
+    <string name="quest_status_active">Active</string>
+    <string name="quest_status_completed">Completed</string>
+    <string name="quest_status_failed">Failed</string>
+    <string name="quest_status_cancelled">Cancelled</string>
+    <string name="quest_delete_confirm_title">Delete this quest?</string>
+    <string name="quest_delete_confirm_body">The quest is removed. Its history stays in the ledger.</string>
+    <string name="quest_reward_line">%1$d XP · %2$d gold</string>
+    <string name="quest_deadline_line">Due %1$s</string>
+    <string name="quest_timer_line">%1$d minutes</string>
+    <string name="quest_no_deadline">No deadline</string>
+    <string name="quest_timer_not_started">Timer not started</string>
+    <string name="message_quest_completed">Quest complete: +%1$d XP, +%2$d gold</string>
+    <string name="message_quest_cancelled">Quest cancelled</string>
+    <string name="message_quest_deleted">Quest deleted</string>
+
+    <!-- Validation -->
+    <string name="violation_title_blank">Enter a title.</string>
+    <string name="violation_title_long">Title must be 80 characters or fewer.</string>
+    <string name="violation_description_long">Description must be 500 characters or fewer.</string>
+    <string name="violation_xp_range">XP reward is outside the allowed range.</string>
+    <string name="violation_gold_range">Gold reward is outside the allowed range.</string>
+    <string name="violation_due_missing">Pick a due date.</string>
+    <string name="violation_due_past">Due date must be in the future.</string>
+    <string name="violation_duration_missing">Enter a duration.</string>
+    <string name="violation_duration_range">Duration must be between 1 and 10080 minutes.</string>
+    <string name="violation_unused_deadline">Clear the fields that do not match the deadline type.</string>
+    <string name="violation_reminder_soon">Reminder must be at least a minute away.</string>
+    <string name="violation_reminder_deadline">Reminder must be before the due date.</string>
+    <string name="violation_penalty_range">Penalty is above the allowed cap.</string>
+    <string name="violation_too_many_subtasks">At most 20 subtasks.</string>
+    <string name="violation_subtask_blank">Subtasks cannot be empty.</string>
+    <string name="violation_subtask_long">Subtasks must be 80 characters or fewer.</string>
 </resources>

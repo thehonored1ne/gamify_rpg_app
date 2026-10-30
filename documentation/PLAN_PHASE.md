@@ -9,8 +9,8 @@ Source of truth for requirements: `specs/001`–`016`
 | Phase | Scope | Status | Gate |
 |---|---|---|---|
 | 0 | Setup: package rename, strip demo, add Room/DataStore/WorkManager | done | build + tests green, no `INTERNET` permission |
-| 1 | Domain core: XP, level, ledger, penalties, streaks, offers | not started | unit tests cover `004`–`007` acceptance criteria |
-| 2 | Persistence + quest CRUD screens | not started | quest survives process death |
+| 1 | Domain core: XP, level, ledger, penalties, streaks, offers | done | unit tests cover `004`–`007` acceptance criteria |
+| 2 | Persistence + quest CRUD screens | done | quest survives process death |
 | 3 | Core loop: complete, undo, fail, dashboard | not started | full loop works offline, rewards/penalties applied once |
 | 4 | Shop, achievements, streak UI, settings basics | not started | balances equal ledger sum |
 | 5 | JSON export and replace-mode import | not started | round-trip restores identical balances |
@@ -18,8 +18,8 @@ Source of truth for requirements: `specs/001`–`016`
 | 7 | Polish: animation, accessibility, performance | not started | `013` accessibility checklist passes |
 
 - [x] Phase 0 — Setup
-- [ ] Phase 1 — Domain core
-- [ ] Phase 2 — Persistence and quest CRUD
+- [x] Phase 1 — Domain core
+- [x] Phase 2 — Persistence and quest CRUD
 - [ ] Phase 3 — Core loop
 - [ ] Phase 4 — Progression surfaces
 - [ ] Phase 5 — Backup
@@ -57,29 +57,29 @@ Gate:
 
 ## Phase 1 — Domain core
 
-- [ ] `TimeProvider` interface and system implementation
-- [ ] XP curve and level derivation (`004`)
-- [ ] Gold ledger math and balance rules (`004`)
-- [ ] Penalty caps and XP floor (`005`)
-- [ ] Streak calculation with grace day and weekly streak (`007`)
-- [ ] Deterministic offer generator (`006`)
+- [x] `TimeProvider` interface and system implementation
+- [x] XP curve and level derivation (`004`)
+- [x] Gold ledger math and balance rules (`004`)
+- [x] Penalty caps and XP floor (`005`)
+- [x] Streak calculation with grace day and weekly streak (`007`)
+- [x] Deterministic offer generator (`006`)
 
 Gate:
-- unit tests assert every acceptance criterion in `004`, `005`, `006`, `007`
-- `domain` package has no Android imports
+- unit tests assert every acceptance criterion in `004`, `005`, `006`, `007` — 49 tests, 0 failures (`testDebugUnitTest`, 2026-10-30)
+- `domain` package has no Android imports — verified by inspection; tests run on the JVM without Robolectric
 
 ## Phase 2 — Persistence and quest CRUD
 
-- [ ] Room entities and DAOs exactly as `011`
-- [ ] Repositories: quest, progress, shop, achievement, streak, system quest
-- [ ] `AppContainer` wiring and ViewModel factories
-- [ ] Screens: quest list, quest detail, quest create/edit
-- [ ] Validation: title length, reward caps, deadline type rules, reminder ordering
+- [x] Room entities and DAOs exactly as `011`
+- [x] Repositories: quest, progress (shop, achievement, streak, system quest move to their phases)
+- [x] `AppContainer` wiring and ViewModel factories
+- [x] Screens: quest list, quest detail, quest create/edit
+- [x] Validation: title length, reward caps, deadline type rules, reminder ordering, subtask limits
 
 Gate:
-- create a quest, kill the app, reopen: quest and subtasks persist
-- invalid rewards and missing deadline fields are rejected with a message
-- deleting a quest leaves its events intact
+- create a quest, kill the app, reopen: quest and subtasks persist — verified on device 2026-10-30
+- invalid rewards and missing deadline fields are rejected with a message — verified on device (XP 999 on a Common quest shows "XP reward is outside the allowed range.")
+- deleting a quest leaves its events intact — verified in `liferpg.db`: event kept with `questId = NULL` and the title snapshot
 
 ## Phase 3 — Core loop
 
@@ -145,7 +145,7 @@ Gate:
 
 ## Working rules
 
-- One phase per commit; update `documentation/CHANGELOG.md` under Unreleased at each phase.
+- One phase per commit; update `documentation/CHANGELOG.md` under Unreleased at each phase. Phases 1 and 2 were committed together in `7efeb2d` because they were requested as one unit; both gates were verified first.
 - A phase is done only when its gate passes; do not start the next phase early.
 - If implementation diverges from a spec, change the spec in the same commit.
 - Run `.\gradlew test` before handing off any phase; run `installDebug` for UI phases.

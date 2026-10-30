@@ -9,6 +9,19 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Phase 1 domain core (pure Kotlin, no Android imports):
+  - `TimeProvider` / `SystemTimeProvider`; `XpCurve` with the `50 + 25(n−1)` curve and level cap 100.
+  - `RewardRules` for the 50%–200% reward bounds; `PenaltyRules` with the gold-zero clamp and XP level floor.
+  - `StreakCalculator` for daily streaks, the one-per-seven-days grace day, and weekly streaks.
+  - `QuestValidator` and `QuestOrder`; deterministic `OfferGenerator` using an FNV-1a seed of `date|rarity|id`.
+  - 49 JVM unit tests covering `004`–`007`.
+- Phase 2 persistence and quest CRUD:
+  - Room `LifeRpgDatabase` v1 with `quests`, `subtasks`, `quest_events`, `system_offers`, `unlocked_achievements`, `owned_items`, `streak_grace`; schema exported to `app/schemas`.
+  - `DefaultQuestRepository` (create, update, delete, complete, undo, cancel, start timer, fail expired, penalties) and `DefaultProgressRepository`.
+  - `AppContainer` manual DI and `LifeRpgApplication`; ViewModel factories per screen.
+  - Screens: quest list with XP/gold header, quest detail, create/edit form with difficulty and category chips, reward fields, deadline types, penalty, and subtask rows.
+  - `QuestViolation` → `strings.xml` mapping so validation errors render as readable messages.
+- `material-icons-core` for the add, back, edit, and delete icons.
 - Phase 0 foundation: Room 2.8.5 (runtime, ktx, compiler via KSP), DataStore 1.3.0, WorkManager 2.12.0, kotlinx-serialization-json 1.12.0, `desugar_jdk_libs` 2.1.5.
 - Test dependencies: Robolectric 4.17, Turbine 1.2.1, `room-testing`, `work-testing`.
 - Room schema export configured to `app/schemas`; KSP and Room Gradle plugins applied.

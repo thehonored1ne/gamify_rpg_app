@@ -59,7 +59,23 @@ The shell is PowerShell:
 - package renamed to `com.example.liferpg`
 - Room (with KSP), DataStore, WorkManager, kotlinx-serialization, and desugaring added
 - Coil and the `INTERNET` permission removed; `allowBackup="false"`
-- `app/schemas` configured as the Room schema directory (first schema appears once a `@Database` class exists)
+- `app/schemas` configured as the Room schema directory
+
+## Applied in Phase 1–2
+
+- `.\gradlew testDebugUnitTest` runs the 49 domain tests (no device needed)
+- the Room schema lives at `app/schemas/com.example.liferpg.data.db.LifeRpgDatabase/1.json` and must be committed with any entity change
+- to inspect the on-device database:
+
+```powershell
+adb shell am force-stop com.example.liferpg
+cmd /c "adb exec-out run-as com.example.liferpg cat databases/liferpg.db > %TEMP%\liferpg.db"
+cmd /c "adb exec-out run-as com.example.liferpg cat databases/liferpg.db-wal > %TEMP%\liferpg.db-wal"
+cmd /c "adb exec-out run-as com.example.liferpg cat databases/liferpg.db-shm > %TEMP%\liferpg.db-shm"
+python -c "import sqlite3;db=sqlite3.connect(r'%TEMP%\liferpg.db');print(db.execute('select sum(xpDelta),sum(goldDelta) from quest_events').fetchone())"
+```
+
+Use `cmd /c "..."` for the binary pull: PowerShell's `>` writes UTF-16 and corrupts the file.
 
 ## Troubleshooting
 
@@ -68,6 +84,8 @@ The shell is PowerShell:
 | `Failed to find target with hash string 'android-37'` | AGP 9.0.1 has no `android-37` target; keep `compileSdk = 36` |
 | `Unresolved reference 'android'` / `'namespace'` in `app/build.gradle.kts` | plugins declared with `apply false` in the app module; remove `apply false` there |
 | `Unresolved reference 'material3'` on `libs.androidx` | alias is `androidx-compose-material3`, accessor is `libs.androidx.compose.material3` |
+| `Unresolved reference 'icons'` | add `implementation(libs.androidx.compose.material.icons.core)`; the icons artifact is separate from Material 3 |
+| `file is not a database` after pulling `liferpg.db` | PowerShell redirection corrupted the binary; pull with `cmd /c` |
 | `alias 'coil-core' is not a valid alias` | catalog aliases cannot be prefixes of each other (kept for reference; Coil is no longer a dependency) |
 | `module 'io.coil-kt.coil' is not a valid module notation` | use `group` + `name`, or `io.coil-kt:coil` with a colon (kept for reference; Coil is no longer a dependency) |
 | Configuration cache holds stale state | `.\gradlew --stop`, then delete `.gradle\configuration-cache` |

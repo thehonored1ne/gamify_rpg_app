@@ -12,6 +12,7 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
 
     enableEdgeToEdge()
-    setContent { LifeRpgTheme { AppRoot() } }
+    val container = (application as LifeRpgApplication).container
+    setContent { LifeRpgTheme { AppRoot(container) } }
   }
 }
