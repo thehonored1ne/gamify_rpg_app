@@ -46,6 +46,16 @@ adb shell run-as com.example.liferpg ls -R cache   # inspect app-private cache
 
 Device serial used during development: `15187705C5010595`.
 
+## Stop everything
+
+`scripts\stop-dev.bat` stops the app process, the Gradle daemon, the Kotlin compile daemon, and the adb server. Double-click it, or run it from a terminal:
+
+```powershell
+scripts\stop-dev.bat -nopause
+```
+
+Nothing needs restoring before the next session: the first `.\gradlew` call starts new daemons, and `adb devices` restarts the adb server. Use `-nopause` to skip the "press any key" prompt.
+
 ## Shell notes
 
 The shell is PowerShell:
